@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3 - Galería de Imágenes</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="container">
+                <h1 class="title">
+                    <i class="fas fa-images"></i>
+                    Galería de Imágenes
+                </h1>
+                <p class="subtitle">Explora miles de imágenes de alta calidad</p>
+                
+                <div class="search-container">
+                    <form id="search-form" class="search-form">
+                        <div class="search-input-group">
+                            <input 
+                                type="text" 
+                                id="search-input" 
+                                placeholder="Buscar imágenes... (paisajes, animales, comida, etc.)"
+                                autocomplete="off"
+                            >
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="search-options">
+                            <select id="category-select">
+                                <option value="">Todas las categorías</option>
+                                <option value="nature">Naturaleza</option>
+                                <option value="people">Personas</option>
+                                <option value="technology">Tecnología</option>
+                                <option value="places">Lugares</option>
+                                <option value="animals">Animales</option>
+                                <option value="food">Comida</option>
+                                <option value="sports">Deportes</option>
+                                <option value="music">Música</option>
+                            </select>
+                            <select id="orientation-select">
+                                <option value="">Cualquier orientación</option>
+                                <option value="horizontal">Horizontal</option>
+                                <option value="vertical">Vertical</option>
+                                <option value="square">Cuadrada</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <div class="gallery-controls">
+                    <div class="results-info">
+                        <span id="results-count">0 imágenes encontradas</span>
+                    </div>
+                    <div class="view-controls">
+                        <button class="view-btn active" data-view="grid" title="Vista en cuadrícula">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" data-view="list" title="Vista en lista">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button class="view-btn" data-view="masonry" title="Vista mosaico">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="loading-container">
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Cargando imágenes...</p>
+                    </div>
+                </div>
+
+                <div class="error-container hidden" id="error-container">
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Oops! Algo salió mal</h3>
+                        <p id="error-text">No se pudieron cargar las imágenes. Verifica tu conexión a internet.</p>
+                        <button class="retry-btn" onclick="retryLoad()">
+                            <i class="fas fa-redo"></i>
+                            Intentar de nuevo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="gallery-container">
+                    <div class="gallery grid-view" id="gallery">
+                        <!-- Las imágenes se cargarán dinámicamente aquí -->
+                    </div>
+                    
+                    <div class="pagination" id="pagination">
+                        <button class="page-btn prev-btn" id="prev-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                            Anterior
+                        </button>
+                        
+                        <div class="page-numbers" id="page-numbers">
+                            <!-- Los números de página se generarán aquí -->
+                        </div>
+                        
+                        <button class="page-btn next-btn" id="next-btn">
+                            Siguiente
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <button class="load-more-btn hidden" id="load-more-btn">
+                        <i class="fas fa-plus"></i>
+                        Cargar más imágenes
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal para imagen ampliada -->
+        <div class="modal" id="image-modal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img id="modal-image" src="" alt="">
+                <div class="modal-info">
+                    <h3 id="modal-title">Título de la imagen</h3>
+                    <p id="modal-description">Descripción de la imagen</p>
+                    <div class="modal-actions">
+                        <a id="download-link" href="#" target="_blank" class="action-btn download">
+                            <i class="fas fa-download"></i>
+                            Descargar
+                        </a>
+                        <button class="action-btn favorite" onclick="toggleFavorite()">
+                            <i class="fas fa-heart"></i>
+                            Me gusta
+                        </button>
+                        <button class="action-btn share" onclick="shareImage()">
+                            <i class="fas fa-share"></i>
+                            Compartir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Panel -->
+    <div class="instructions-panel">
+        <button class="instructions-toggle" onclick="toggleInstructions()">
+            <i class="fas fa-question-circle"></i>
+            Instrucciones
+        </button>
+        <div class="instructions-content hidden" id="instructions-content">
+            <h3>Instrucciones para el estudiante</h3>
+            
+            <div class="instruction-section">
+                <h4><i class="fas fa-code"></i> APIs a integrar</h4>
+                <ul>
+                    <li><strong>Unsplash API:</strong> <code>https://api.unsplash.com/</code></li>
+                    <li><strong>Pixabay API:</strong> <code>https://pixabay.com/api/</code></li>
+                    <li>Registra tu API key gratuita en cualquiera de estos servicios</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h4><i class="fas fa-tasks"></i> Funciones a implementar</h4>
+                <ul>
+                    <li><code>fetchImages(query, page)</code> - Obtener imágenes de la API</li>
+                    <li><code>renderImages(images)</code> - Mostrar imágenes en la galería</li>
+                    <li><code>searchImages()</code> - Buscar por término</li>
+                    <li><code>changePage(page)</code> - Navegación de páginas</li>
+                    <li><code>openModal(imageData)</code> - Mostrar imagen ampliada</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h4><i class="fas fa-star"></i> Características bonus</h4>
+                <ul>
+                    <li>Lazy loading de imágenes</li>
+                    <li>Favoritos en localStorage</li>
+                    <li>Filtros avanzados</li>
+                    <li>Descarga de imágenes</li>
+                    <li>Modo infinito scroll</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h4><i class="fas fa-lightbulb"></i> Conceptos clave</h4>
+                <ul>
+                    <li>Async/Await y Promises</li>
+                    <li>Fetch API y manejo de errores</li>
+                    <li>DOM manipulation avanzada</li>
+                    <li>Event delegation</li>
+                    <li>Intersection Observer (lazy loading)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

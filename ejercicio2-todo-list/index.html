@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2 - Lista de Tareas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <header>
+                <h1><i class="fas fa-check-circle"></i> Mi Lista de Tareas</h1>
+                <div class="stats">
+                    <span class="stat">
+                        <i class="fas fa-tasks"></i>
+                        Total: <span id="total-count">0</span>
+                    </span>
+                    <span class="stat">
+                        <i class="fas fa-clock"></i>
+                        Pendientes: <span id="pending-count">0</span>
+                    </span>
+                    <span class="stat completed">
+                        <i class="fas fa-check"></i>
+                        Completadas: <span id="completed-count">0</span>
+                    </span>
+                </div>
+            </header>
+
+            <div class="input-section">
+                <form id="todo-form">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="todo-input" 
+                            placeholder="Escribe una nueva tarea..."
+                            maxlength="100"
+                            required
+                        >
+                        <select id="priority-select">
+                            <option value="baja">Prioridad Baja</option>
+                            <option value="media" selected>Prioridad Media</option>
+                            <option value="alta">Prioridad Alta</option>
+                        </select>
+                        <button type="submit" id="add-btn">
+                            <i class="fas fa-plus"></i>
+                            Agregar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="todas">
+                    <i class="fas fa-list"></i> Todas
+                </button>
+                <button class="filter-btn" data-filter="pendientes">
+                    <i class="fas fa-clock"></i> Pendientes
+                </button>
+                <button class="filter-btn" data-filter="completadas">
+                    <i class="fas fa-check"></i> Completadas
+                </button>
+                <button class="filter-btn" data-filter="alta">
+                    <i class="fas fa-exclamation"></i> Alta Prioridad
+                </button>
+                <div class="actions">
+                    <button id="clear-completed" class="action-btn">
+                        <i class="fas fa-trash"></i> Limpiar Completadas
+                    </button>
+                    <button id="clear-all" class="action-btn danger">
+                        <i class="fas fa-trash-alt"></i> Limpiar Todo
+                    </button>
+                </div>
+            </div>
+
+            <div class="todo-list">
+                <ul id="todo-items">
+                    <!-- Las tareas se generarán dinámicamente aquí -->
+                </ul>
+                <div id="empty-state" class="empty-state">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>No tienes tareas</h3>
+                    <p>¡Agrega tu primera tarea arriba!</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>Instrucciones para el estudiante:</h3>
+            <div class="instruction-grid">
+                <div class="instruction-card">
+                    <h4><i class="fas fa-code"></i> Funciones a implementar:</h4>
+                    <ul>
+                        <li><code>addTodo()</code> - Agregar nueva tarea</li>
+                        <li><code>deleteTodo(id)</code> - Eliminar tarea</li>
+                        <li><code>toggleTodo(id)</code> - Marcar como completada</li>
+                        <li><code>editTodo(id)</code> - Editar texto de tarea</li>
+                        <li><code>filterTodos(filter)</code> - Filtrar tareas</li>
+                    </ul>
+                </div>
+                <div class="instruction-card">
+                    <h4><i class="fas fa-database"></i> LocalStorage:</h4>
+                    <ul>
+                        <li><code>saveTodos()</code> - Guardar en localStorage</li>
+                        <li><code>loadTodos()</code> - Cargar desde localStorage</li>
+                        <li><code>updateStats()</code> - Actualizar estadísticas</li>
+                    </ul>
+                </div>
+                <div class="instruction-card">
+                    <h4><i class="fas fa-star"></i> Funcionalidades bonus:</h4>
+                    <ul>
+                        <li>Drag & drop para reordenar</li>
+                        <li>Fechas de vencimiento</li>
+                        <li>Categorías personalizadas</li>
+                        <li>Búsqueda de tareas</li>
+                        <li>Exportar/Importar tareas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

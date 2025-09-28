@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 4 - Sistema de Gestión de Estudiantes</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header con navegación -->
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    Sistema de Gestión Académica
+                </h1>
+                <nav class="nav-menu">
+                    <button class="nav-btn active" data-section="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        Dashboard
+                    </button>
+                    <button class="nav-btn" data-section="students">
+                        <i class="fas fa-users"></i>
+                        Estudiantes
+                    </button>
+                    <button class="nav-btn" data-section="courses">
+                        <i class="fas fa-book"></i>
+                        Cursos
+                    </button>
+                    <button class="nav-btn" data-section="grades">
+                        <i class="fas fa-star"></i>
+                        Calificaciones
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <h2 class="section-title">Dashboard Académico</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-students">0</h3>
+                            <p>Estudiantes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-courses">0</h3>
+                            <p>Cursos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="average-grade">0.0</h3>
+                            <p>Promedio General</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="honor-students">0</h3>
+                            <p>Honor Roll</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>Distribución de Calificaciones</h3>
+                        <canvas id="gradesChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Estudiantes por Curso</h3>
+                        <canvas id="coursesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Students Section -->
+        <section id="students" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Gestión de Estudiantes</h2>
+                    <button class="primary-btn" onclick="showStudentModal()">
+                        <i class="fas fa-plus"></i>
+                        Nuevo Estudiante
+                    </button>
+                </div>
+
+                <div class="filters-container">
+                    <div class="search-box">
+                        <input type="text" id="student-search" placeholder="Buscar estudiante...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <select id="course-filter">
+                        <option value="">Todos los cursos</option>
+                    </select>
+                    <select id="grade-filter">
+                        <option value="">Todas las calificaciones</option>
+                        <option value="A">A (90-100)</option>
+                        <option value="B">B (80-89)</option>
+                        <option value="C">C (70-79)</option>
+                        <option value="D">D (60-69)</option>
+                        <option value="F">F (0-59)</option>
+                    </select>
+                </div>
+
+                <div class="students-container">
+                    <div class="students-grid" id="students-grid">
+                        <!-- Los estudiantes se cargarán dinámicamente -->
+                    </div>
+                    <div class="no-results hidden" id="no-students">
+                        <i class="fas fa-user-slash"></i>
+                        <h3>No se encontraron estudiantes</h3>
+                        <p>Agrega tu primer estudiante para comenzar</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Gestión de Cursos</h2>
+                    <button class="primary-btn" onclick="showCourseModal()">
+                        <i class="fas fa-plus"></i>
+                        Nuevo Curso
+                    </button>
+                </div>
+
+                <div class="courses-container">
+                    <div class="courses-grid" id="courses-grid">
+                        <!-- Los cursos se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grades Section -->
+        <section id="grades" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Gestión de Calificaciones</h2>
+                </div>
+
+                <div class="grades-container">
+                    <div class="grades-table-container">
+                        <table class="grades-table" id="grades-table">
+                            <thead>
+                                <tr>
+                                    <th>Estudiante</th>
+                                    <th>Curso</th>
+                                    <th>Calificación</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="grades-tbody">
+                                <!-- Las calificaciones se cargarán dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Modal -->
+        <div class="modal" id="student-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="student-modal-title">Nuevo Estudiante</h3>
+                    <button class="modal-close" onclick="closeStudentModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="student-form" class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="student-name">Nombre Completo *</label>
+                            <input type="text" id="student-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-email">Email *</label>
+                            <input type="email" id="student-email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="student-age">Edad</label>
+                            <input type="number" id="student-age" min="16" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="student-phone">Teléfono</label>
+                            <input type="tel" id="student-phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student-courses">Cursos Inscritos</label>
+                        <div class="checkbox-group" id="student-courses">
+                            <!-- Los cursos disponibles se cargarán aquí -->
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" onclick="closeStudentModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="primary-btn" onclick="handleStudentSubmit()">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Course Modal -->
+        <div class="modal" id="course-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="course-modal-title">Nuevo Curso</h3>
+                    <button class="modal-close" onclick="closeCourseModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="course-form" class="modal-body">
+                    <div class="form-group">
+                        <label for="course-name">Nombre del Curso *</label>
+                        <input type="text" id="course-name" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="course-code">Código *</label>
+                            <input type="text" id="course-code" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="course-credits">Créditos</label>
+                            <input type="number" id="course-credits" min="1" max="6" value="3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-description">Descripción</label>
+                        <textarea id="course-description" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course-instructor">Instructor</label>
+                        <input type="text" id="course-instructor">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" onclick="closeCourseModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="primary-btn" onclick="handleCourseSubmit()">
+                            <i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Grade Modal -->
+        <div class="modal" id="grade-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Asignar Calificación</h3>
+                    <button class="modal-close" onclick="closeGradeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="grade-form" class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="grade-student">Estudiante *</label>
+                            <select id="grade-student" required>
+                                <option value="">Seleccionar estudiante</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="grade-course">Curso *</label>
+                            <select id="grade-course" required>
+                                <option value="">Seleccionar curso</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="grade-score">Calificación (0-100) *</label>
+                        <input type="number" id="grade-score" min="0" max="100" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" onclick="closeGradeModal()">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="primary-btn" onclick="handleGradeSubmit()">
+                            <i class="fas fa-save"></i>
+                            Asignar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions-fab">
+        <button class="fab-btn" onclick="toggleInstructions()">
+            <i class="fas fa-question"></i>
+        </button>
+        <div class="instructions-panel hidden" id="instructions-panel">
+            <h3>Ejercicio 4: Programación Orientada a Objetos</h3>
+            
+            <div class="instruction-section">
+                <h4><i class="fas fa-cogs"></i> Clases a implementar:</h4>
+                <ul>
+                    <li><strong>Person</strong> - Clase base</li>
+                    <li><strong>Student</strong> - Hereda de Person</li>
+                    <li><strong>Course</strong> - Representar cursos</li>
+                    <li><strong>Grade</strong> - Calificaciones</li>
+                    <li><strong>SchoolManager</strong> - Controlador principal</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h4><i class="fas fa-code"></i> Conceptos clave:</h4>
+                <ul>
+                    <li>Herencia y polimorfismo</li>
+                    <li>Encapsulación y métodos privados</li>
+                    <li>Getters y setters</li>
+                    <li>Métodos estáticos</li>
+                    <li>Patrón Singleton</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h4><i class="fas fa-tasks"></i> Funcionalidades:</h4>
+                <ul>
+                    <li>CRUD de estudiantes y cursos</li>
+                    <li>Sistema de calificaciones</li>
+                    <li>Estadísticas y reportes</li>
+                    <li>Búsqueda y filtrado</li>
+                    <li>Validaciones personalizadas</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="solucion.js"></script>
+</body>
+</html>

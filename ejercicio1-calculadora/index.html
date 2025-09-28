@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 - Calculadora Interactiva</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora Interactiva</h1>
+        <div class="calculator">
+            <div class="display">
+                <input type="text" id="result" readonly>
+            </div>
+            <div class="buttons">
+                <button class="btn clear" onclick="clearResult()">C</button>
+                <button class="btn operator" onclick="deleteLast()">⌫</button>
+                <button class="btn operator" onclick="appendToResult('/')">/</button>
+                <button class="btn operator" onclick="appendToResult('*')">×</button>
+                
+                <button class="btn number" onclick="appendToResult('7')">7</button>
+                <button class="btn number" onclick="appendToResult('8')">8</button>
+                <button class="btn number" onclick="appendToResult('9')">9</button>
+                <button class="btn operator" onclick="appendToResult('-')">-</button>
+                
+                <button class="btn number" onclick="appendToResult('4')">4</button>
+                <button class="btn number" onclick="appendToResult('5')">5</button>
+                <button class="btn number" onclick="appendToResult('6')">6</button>
+                <button class="btn operator" onclick="appendToResult('+')">+</button>
+                
+                <button class="btn number" onclick="appendToResult('1')">1</button>
+                <button class="btn number" onclick="appendToResult('2')">2</button>
+                <button class="btn number" onclick="appendToResult('3')">3</button>
+                <button class="btn equals" onclick="calculateResult()" rowspan="2">=</button>
+                
+                <button class="btn number zero" onclick="appendToResult('0')">0</button>
+                <button class="btn number" onclick="appendToResult('.')">.</button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>Instrucciones para el estudiante:</h3>
+            <ul>
+                <li>Completa las funciones en el archivo script.js</li>
+                <li>Implementa la función <code>appendToResult()</code> para agregar números y operadores</li>
+                <li>Implementa la función <code>calculateResult()</code> para realizar los cálculos</li>
+                <li>Implementa la función <code>clearResult()</code> para limpiar la pantalla</li>
+                <li>Implementa la función <code>deleteLast()</code> para borrar el último carácter</li>
+                <li>Bonus: Agrega validación para evitar errores de sintaxis</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
