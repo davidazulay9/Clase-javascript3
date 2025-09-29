@@ -5,13 +5,9 @@
 // CONFIGURACIÓN Y CONSTANTES
 // ============================================================================
 
-// TODO: Obtén tu API key gratuita de Unsplash o Pixabay
-// Unsplash: https://unsplash.com/developers
-// Pixabay: https://pixabay.com/api/docs/
 const API_CONFIG = {
-    // Descomenta y completa con tu API key
-    // UNSPLASH_ACCESS_KEY: 'TU_ACCESS_KEY_AQUI',
-    // PIXABAY_API_KEY: 'TU_API_KEY_AQUI',
+    UNSPLASH_ACCESS_KEY: 'MKDXEuPPos_rNrPAI809oSU_mZ9-0O8GsSXkzWsz-Qk',
+    PIXABAY_API_KEY: '52513422-7d809d572841ff0f64de47e55',
     
     // URLs base de las APIs
     UNSPLASH_BASE_URL: 'https://api.unsplash.com',

@@ -8,7 +8,6 @@ Una colección completa de 5 ejercicios progresivos diseñados para estudiantes 
 - [Ejercicio 2: Lista de Tareas](#ejercicio-2-lista-de-tareas)
 - [Ejercicio 3: Galería de Imágenes](#ejercicio-3-galería-de-imágenes)
 - [Ejercicio 4: Sistema de Gestión](#ejercicio-4-sistema-de-gestión)
-- [Ejercicio 5: Juego de Memoria](#ejercicio-5-juego-de-memoria)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Requisitos Técnicos](#requisitos-técnicos)
 - [Guía para Profesores](#guía-para-profesores)
@@ -223,53 +222,6 @@ class SchoolManager {            // Patrón Singleton
 
 ---
 
-## 🧠 Ejercicio 5: Juego de Memoria
-
-### 📁 Directorio: `ejercicio5-memoria/`
-
-**Nivel:** Avanzado  
-**Tiempo estimado:** 10-12 horas  
-**Conceptos clave:** Animaciones CSS, Game State, Algoritmos, Canvas
-
-### 🎯 Objetivos
-
-- Implementar lógica de juegos
-- Crear animaciones complejas con CSS
-- Manejar estados de juego
-- Implementar sistemas de puntuación
-
-### 🛠️ Funciones a Implementar
-
-```javascript
-function shuffleArray(array)        // Algoritmo Fisher-Yates
-function createCard(symbol, index)  // Crear elementos DOM
-function handleCardClick(card)      // Lógica de clic
-function flipCard(card)             // Animaciones de volteo
-function checkMatch()               // Verificar coincidencias
-function calculateScore(isMatch)    // Sistema de puntuación
-function showHint()                 // Sistema de pistas
-```
-
-### 💡 Características
-
-- ✅ 4 niveles de dificultad
-- ✅ 5 temas visuales diferentes
-- ✅ Animaciones CSS avanzadas
-- ✅ Sistema de puntuación complejo
-- ✅ Persistencia de récords
-- ✅ Sistema de pistas
-- ✅ Efectos de sonido (opcionales)
-- ✅ Responsive design completo
-
-### 🏃‍♂️ Cómo Empezar
-
-1. Estudia el estado del juego (`gameState`)
-2. Implementa el algoritmo de mezcla
-3. Crea la lógica de volteo de cartas
-4. Agrega el sistema de puntuación
-
----
-
 ## 📁 Estructura del Proyecto
 
 ```
@@ -291,10 +243,6 @@ Clase javascript3/
 │   ├── 📄 index.html
 │   ├── 📄 style.css
 │   └── 📄 script.js
-└── 📁 ejercicio5-memoria/
-    ├── 📄 index.html
-    ├── 📄 style.css
-    └── 📄 script.js
 ```
 
 ---
