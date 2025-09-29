@@ -1,4 +1,4 @@
-# 🚀 Ejercicios de JavaScript Avanzado - Nivel 3
+# 🚀 Ejercicios de JavaScript Avanzado - Nivel 3.1
 
 Una colección completa de 5 ejercicios progresivos diseñados para estudiantes de JavaScript nivel avanzado. Cada ejercicio incrementa en complejidad e introduce nuevos conceptos y tecnologías web modernas.
 
